@@ -9,6 +9,8 @@ var app = module.exports = express.createServer();
 var mysql = require('mysql');
 var connection = mysql.createConnection({host : 'localhost', user: 'root', database : 'metrojobb'});
 
+var app_props = require("./properties/application_properties");
+
 // Configuration
 
 app.configure(function(){
@@ -30,6 +32,6 @@ app.configure('production', function(){
 
 require("./boot")({ app: app, db: connection }, __dirname + "/routes");
 
-app.listen(4711, function(){
+app.listen(app_props.port, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
