@@ -3,10 +3,11 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes');
-
+var express = require('express');
 var app = module.exports = express.createServer();
+
+var mysql = require('mysql');
+var connection = mysql.createConnection({host : 'localhost', user: 'root', database : 'metrojobb'});
 
 // Configuration
 
@@ -27,10 +28,8 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-// Routes
+require("./boot")({ app: app, db: connection }, __dirname + "/routes");
 
-app.get('/', routes.index);
-
-app.listen(3000, function(){
+app.listen(4711, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
