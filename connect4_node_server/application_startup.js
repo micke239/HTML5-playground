@@ -1,5 +1,6 @@
-vm = require('vm'), fs = require('fs'), net = require('net');
+vm = require('vm'), fs = require('fs'), events = require('events');
 props = require('./properties');
+io = require("socket.io").listen(props.port);
 
 var count = 0;
 
