@@ -1,6 +1,20 @@
-vm = require('vm'), fs = require('fs'), events = require('events');
+vm = require('vm')
+fs = require('fs')
+events = require('events');
 props = require('./properties');
-io = require("socket.io").listen(props.port);
+var WebSocketServer = require('websocket').server;
+http = require('http');
+
+server = http.createServer(function(request, response) {
+    console.log((new Date()) + ' Received request for ' + request.url);
+    response.writeHead(404);
+    response.end();
+});
+server.listen(props.port, function() {
+    console.log((new Date()) + ' Server is listening on port ' + props.port);
+});
+
+wsServer = new WebSocketServer({httpServer: server, autoAcceptConnections: false});
 
 var count = 0;
 

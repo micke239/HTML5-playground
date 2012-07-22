@@ -1,13 +1,17 @@
-io.sockets.on('connection', function(socket) {
- 	var user = new User(socket.remoteAddress, socket.remotePort, socket);
+wsServer.on('request', function(request) {
+	var connection = request.accept(null, request.origin);
+	console.log("Accepted a request from origin " + request.origin);
+	
+	var user = new User(connection.remoteAddress, connection.socket.remotePort, connection);
   
     LobbyController.emit('userJoinedLobby', user);
   
-    socket.on('data', function(message) {
+    connection.on('message', function(message) {
         UserController.emit('message', message, user);
     });
 
-    socket.on('close', function(bool) {
+    connection.on('close', function(bool) {
+		console.log("received close from " + user);
         UserController.emit('disconnect', bool, user);
     });
 

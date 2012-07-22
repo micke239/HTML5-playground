@@ -1,7 +1,7 @@
-var User = function(ip, port, socket) {
+var User = function(ip, port, connection) {
     this.ip = ip;
     this.port = port;
-    this.socket = socket;
+    this.connection = connection;
     this.userName = "Guest" + Math.floor(Math.random()*1000000);
 
     this.toString = function() {
@@ -18,31 +18,35 @@ var User = function(ip, port, socket) {
 
     this.gameRequest = function(opponent) {
         this.write({
-            game_request: opponent.getUserName()
+            gameRequest: opponent.getUserName()
         });
     };
 
     this.requestResponse = function(opponentName, accepted) {
-        var response = {request_accepted : accepted, opponent : opponentName};
+        var response = {requestAccepted : accepted, opponent : opponentName};
 
         this.write(response);
     };
 
     this.frenemyAvailable = function(frenemy) {
         this.write({
-            new_user: frenemy.getUserName()
+            newUser: frenemy.getUserName()
         });
     };
 
     this.frenemyNotAvailable = function(frenemy) {
         this.write({
-            user_disconnect: frenemy.getUserName()
+            userDisconnect: frenemy.getUserName()
         });
     };
 
 
     this.write = function(object) {
-        socket.write(JSON.stringify(object));
+        connection.sendUTF(JSON.stringify(object));
         console.log("Wrote " + JSON.stringify(object) + " to " + this.toString());
-    }
+    };
+
+	this.ping = function(object) {
+		
+	};
 };

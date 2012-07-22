@@ -19,7 +19,7 @@ var lobby = {
 
         users.remove(frenemy.getUserName());
         frenemy.write({
-            Users: users
+            users: users
         });
     },
     leaveLobby: function(frenemy) {
