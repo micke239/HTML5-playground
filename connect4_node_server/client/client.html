@@ -1,0 +1,31 @@
+<html>
+<head>
+	<link href="./css/bootstrap.css" rel="stylesheet"/>
+	<script type="text/javascript" src="./js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="./js/bootstrap.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var socket = io.connect('http://localhost/');
+			
+		});	
+ 	</script>
+</head>
+<body>
+	<div class="alert alert-info" style="display:none;width:365px;margin:5px 0 0 5px;" id="confirm_box">
+		<text>hello</text>
+		<div style="margin-top:5px;">
+			<button class="btn btn-success" style="">Yes! Please!</button>
+			<button class="btn btn-danger">No! No wanna!</button>
+		</div>
+	</div>
+	<div style="margin:5px 0 0 10px;display:inline-block;vertical-align:top;width:200px;">
+		<button class="btn" style="width:200px;margin-top:5px;" id="selectedFrenemy">Play selected frenemy</button>
+		<button class="btn" style="width:200px;margin-top:5px;" id="randomFrenemy">Play random frenemy</button>
+	</div>	
+	<div style="margin:5px 0 0 5px; width:200px;display:inline-block;">
+		<ul class="nav nav-tabs nav-stacked" id="users">
+		</ul>
+	</div>
+</body>
+</html>

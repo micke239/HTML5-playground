@@ -1,19 +1,29 @@
-vm = require('vm')
-fs = require('fs')
-events = require('events');
-props = require('./properties');
-var WebSocketServer = require('websocket').server;
-http = require('http');
+//vm = require('vm')
+//fs = require('fs')
+var events = require('events');
+var props = require('./properties');
+//var WebSocketServer = require('websocket').server;
+var app = require('express').createServer();
+var io = require('socket.io').listen(app); 
 
 server = http.createServer(function(request, response) {
     console.log((new Date()) + ' Received request for ' + request.url);
     response.writeHead(404);
     response.end();
 });
+
+
+
 server.listen(props.port, function() {
     console.log((new Date()) + ' Server is listening on port ' + props.port);
 });
 
+io.sockets.on('connection', function(socket) {
+	console.log('incoming connection!')
+});
+
+
+/*
 wsServer = new WebSocketServer({httpServer: server, autoAcceptConnections: false});
 
 var count = 0;
@@ -43,4 +53,4 @@ for (var i = 0; i < props.source_folders.length; i++) {
     readFiles(__dirname + props.source_folders[i]);
 }
 
-console.log("Included " + count + " JavaScript files.");
+console.log("Included " + count + " JavaScript files.");*/

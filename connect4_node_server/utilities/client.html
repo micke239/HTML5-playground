@@ -1,0 +1,105 @@
+<html>
+<head>
+	<link href="./css/bootstrap.css" rel="stylesheet"/>
+	<script type="text/javascript" src="./js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="./js/bootstrap.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var socket = io.connect('http://localhost/');
+			
+			
+			
+			socket = new WebSocket("ws://localhost:4711/");
+	
+			socket.onopen = function() {
+				console.log("Socket is opened!");
+			};
+	
+			socket.onmessage = function(evnt) {
+				var obj = JSON.parse(evnt.data);
+				if (obj) {
+					if (obj.users) {
+						for (var i = 0; i < obj.users.length; i++) {
+							addFrenemy(obj.users[i]);
+						}
+					} else if (obj.newUser) {
+						addFrenemy(obj.newUser);
+					} else if (obj.userDisconnect) {
+						removeFrenemy(obj.userDisconnect);
+					} else if (obj.gameRequest) {
+						$('#confirm_box text').text(obj.gameRequest + " wants to play a game of connect-4 against you.");
+						$('#confirm_box').css('display', 'block');
+						//alert(obj.gameRequest);
+					}
+				}
+			}
+	
+			socket.onclose = function() {
+				console.log("Connection closed.");
+			}
+			
+			$('#selectedFrenemy').click(function() {
+				if ($('#users li.active a').text()) {
+					socket.send(JSON.stringify({
+						gameRequest: $('#users li.active a').text()
+					}));
+				}
+			});
+		});
+		
+		var usersClickHandler = function(elem) {
+			$('#users li.active').removeClass('active');
+			elem.setAttribute('class','active');
+		}
+		
+		var addFrenemy = function(name) {
+			var users = document.getElementById("users");
+			
+			var listItem = document.createElement('li');
+			
+			$(listItem).click(function() {
+				$('#users li.active').removeClass('active');
+				$(this).addClass('active');
+			});
+		
+			var anchor = document.createElement('a');
+			anchor.setAttribute('href', '#');
+			anchor.appendChild(document.createTextNode(name));
+			
+			listItem.appendChild(anchor);
+			
+			users.appendChild(listItem);
+		};
+		
+		var removeFrenemy = function(name) {
+			$("#users").children().each(function() {
+				$(this).children().filter('a').each(function() {
+					if ($(this).text() === name) {
+						$(this).parent().remove();
+					}
+				});
+			});
+		}
+		
+		
+ 	</script>
+</head>
+<body>
+	<div class="alert alert-info" style="display:none;width:365px;margin:5px 0 0 5px;" id="confirm_box">
+		<text>hello</text>
+		<div style="margin-top:5px;">
+			<button class="btn btn-success" style="">Yes! Please!</button>
+			<button class="btn btn-danger">No! No wanna!</button>
+		</div>
+	</div>
+	<div style="margin:5px 0 0 10px;display:inline-block;vertical-align:top;width:200px;">
+		<button class="btn" style="width:200px;margin-top:5px;" id="selectedFrenemy">Play selected frenemy</button>
+		<button class="btn" style="width:200px;margin-top:5px;" id="randomFrenemy">Play random frenemy</button>
+	</div>	
+	<div style="margin:5px 0 0 5px; width:200px;display:inline-block;">
+		<ul class="nav nav-tabs nav-stacked" id="users">
+		</ul>
+	</div>
+</body>
+</html>
