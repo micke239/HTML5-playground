@@ -1,0 +1,25 @@
+button(class="btn btn-success new-article-button") create new article
+input(type="text", placeholder="search")
+table(class="table table-striped")
+	thead
+		tr
+			th id
+			th title
+			th created
+			th edited
+			th edit
+			th remove
+	tbody
+		- if (articles) {
+			- for (var i = 0; i < articles.length; i++) {
+				tr		
+					td #{articles[i].id}
+					td #{articles[i].title}
+					td #{articles[i].created}
+					td #{articles[i].edited}
+					td 
+						button(class="btn btn-primary", data-id="edit-" + #{articles[i].id}) edit
+					td 
+						button(class="btn btn-danger", data-id="edit-" + #{articles[i].id}) remove
+			- }
+		- }

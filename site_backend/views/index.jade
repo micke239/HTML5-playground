@@ -1,0 +1,14 @@
+doctype 5
+html(ng-app="app")
+	head
+		title Backend Site
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		link(rel="stylesheet", href="/css/bootstrap.min.css", type="text/css")
+		link(rel="stylesheet", href="/css/bootstrap-responsive.css", type="text/css")
+		link(rel="stylesheet", href="/css/docs.css", type="text/css")
+		link(rel="stylesheet", href="/css/style.css", type="text/css")
+	body
+		section(ng-view)
+		
+		script(src="/js/conf/require.js")
+		script(data-main="main.js", src="/js/lib/require.js")
