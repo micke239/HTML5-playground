@@ -1,4 +1,4 @@
-require(["app", "controller/controllers"], function(app, controllers) {
+require(["jquery", "app", "controller/controllers"], function($, app, controllers) {
 	app.config(function($routeProvider, $locationProvider) {
         $locationProvider.hashPrefix('!');
         $routeProvider.when("/", {

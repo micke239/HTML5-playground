@@ -24,7 +24,9 @@
     });
     
     app.get("/blog/post/", function(req, res) {
-    	res.render("blog-post");
+    	res.render("blog-post", {
+    		admin: true
+    	});
     });
     
     app.get("/blog/post/:id/", function(req, res) {

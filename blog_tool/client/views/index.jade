@@ -7,9 +7,6 @@ html(ng-app="app")
 		link(rel="stylesheet", href="/css/bootstrap-responsive.css", type="text/css")
 		link(rel="stylesheet", href="/css/docs.css", type="text/css")
 		link(rel="stylesheet", href="/css/style.css", type="text/css")
-		
-		script(src="/js/conf/require.js")
-		script(data-main="main.js", src="/js/lib/require.js")
 	body
 		div.container
 			header(class="jumbotron subhead")
@@ -30,3 +27,6 @@ html(ng-app="app")
 			
 			footer.footer
 				span &copy; Mikael Nilsson -- 2012
+		
+		script(src="/js/conf/require.js")
+		script(data-main="main.js", src="/js/lib/require.js")
