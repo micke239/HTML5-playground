@@ -17,16 +17,15 @@ define(["jquery"], function($) {
 	    	getPostContent();
 	    });
 
-	    $scope.editContent = function() {
-	    	var markdownTextarea;
+	    $scope.editContent = function(scroll) {
 	    	$("#post-content .editable").attr("contenteditable", "true");
 
 	    	$("#post-content .markdown-content").addClass("hidden");
 	    	$("#post-content .markdown-textarea").removeClass("hidden");
 
 
-	    	$(".btn.save, .btn.revert, .btn.edit, .btn.preview").toggleClass("hidden");
-
+	    	$("#save, #revert, #preview").removeClass("hidden");
+	    	$("#edit, #edit-preview").addClass("hidden");
 	    	$("html, body").animate({ scrollTop: $($('.editable')[0]).offset().top - 10 }, 50);
 	    };
 
@@ -43,7 +42,8 @@ define(["jquery"], function($) {
 	    		if (data.status === "success") {
 	    			getPostContent();
 
-		    		$(".btn.save, .btn.revert, .btn.edit, .btn.preview").toggleClass("hidden");
+		    		$("#save, #revert, #preview, #edit-preview").addClass("hidden");
+		    		$("#edit").removeClass("hidden");
 	    		} else {
 	    			alert("failed to save article :(");
 	    		}
@@ -54,12 +54,28 @@ define(["jquery"], function($) {
 	    	if (confirm("are you sure you want to revert the changes?")) {
 		    	getPostContent();
 
-		    	$(".btn.save, .btn.revert, .btn.edit, .btn.preview").toggleClass("hidden");
+	    		$("#save, #revert, #preview, #edit-preview").addClass("hidden");
+	    		$("#edit").removeClass("hidden");
 	    	}	
 	    };
 
 	    $scope.preview = function() {
+	    	var params = {
+				markdown: $("#post-content .markdown-textarea textarea").val()
+	    	};
 
+	    	$.post("/blog/convert-markdown/", params).success(function(data) {
+	    		var content = $("#post-content .markdown-content");
+	    		content.html(data);
+
+				$("#post-content .markdown-textarea").addClass("hidden");
+	    		content.removeClass("hidden");
+
+	    		$("#post-content .editable").attr("contenteditable", "false");
+
+	    		$("#preview").addClass("hidden");
+	    		$("#edit-preview").removeClass("hidden");
+	    	});
 	    };
 	};
 

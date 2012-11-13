@@ -105,6 +105,17 @@
             res.end();
         });
     });
+
+    app.post("/blog/convert-markdown/", function(req, res) {
+        console.log(req.body);
+        if (req.body.markdown) {
+            res.write(ghm.parse(req.body.markdown));
+        } else {
+            res.write("");
+        }
+
+        res.end();
+    });
     
     app.get("/demo/", function(req, res) {
     	res.write("");

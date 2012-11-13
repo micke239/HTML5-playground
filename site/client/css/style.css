@@ -18,11 +18,11 @@ h1 small {
 	margin-top: 10px;
 }
 
-.btn.save {
+#post-content #save {
 	margin-right: 10px;
 }
 
-.btn.new {
+#post-content #new {
 	margin-bottom: 20px;
 }
 
