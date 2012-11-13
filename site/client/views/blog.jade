@@ -1,0 +1,18 @@
+- if (admin) {
+	div.row
+		div.span9
+			button.btn.btn-success.btn-small.new(ng-click="new()") new
+- }
+
+- for (var i = 0; i < posts.length; i+=3) {
+	div.row
+		- if(posts[i]) {
+			a(href="#{createBlogPostUri(posts[i])}").span3 #{posts[i].heading}
+		- }
+		- if(posts[i+1]) {
+			a(href="#{createBlogPostUri(posts[i+1])}").span3 #{posts[i+1].heading}
+		- }
+		- if(posts[i+2]) {
+			a(href="#{createBlogPostUri(posts[i+2])}").span3 #{posts[i+2].heading}
+		- }		
+- }

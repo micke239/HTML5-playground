@@ -1,17 +1,8 @@
-define(["jquery"], function($) {
-	var getId = function(slug) {
-		return slug.split('-')[0];
-	};
+define(["controller/BlogPostController", "controller/BlogHomeController"], 
+	function(BlogPostController, BlogHomeController) {	
+
+	"use strict";
 	
-	var blogPostController = function($scope, $routeParams, $http) {
-			
-	    $scope.$on('$viewContentLoaded', function() {
-	    	$http.get("/blog/post/" + getId($routeParams.slug) + "/").
-	    		success(function(data) {
-	    			$("#post-content").html(data);
-	    		});
-	    });
-	}
 	
-	return {blogPostController: blogPostController}
+	return {BlogPostController: BlogPostController, BlogHomeController : BlogHomeController}
 });

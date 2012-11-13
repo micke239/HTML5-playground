@@ -4,7 +4,7 @@ table(class="table table-striped")
 	thead
 		tr
 			th id
-			th title
+			th heading
 			th created
 			th edited
 			th edit
@@ -14,7 +14,7 @@ table(class="table table-striped")
 			- for (var i = 0; i < articles.length; i++) {
 				tr		
 					td #{articles[i].id}
-					td #{articles[i].title}
+					td #{articles[i].heading}
 					td #{articles[i].created}
 					td #{articles[i].edited}
 					td 

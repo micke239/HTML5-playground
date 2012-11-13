@@ -4,9 +4,10 @@ require(["jquery", "app", "controller/controllers"], function($, app, controller
         $routeProvider.when("/", {
             redirectTo : "/blog/"
         }).when("/blog/", {
+            controller: controllers.BlogHomeController,
             templateUrl : "/blog/"
         }).when("/blog/:slug/", {
-            controller : controllers.blogPostController,
+            controller : controllers.BlogPostController,
             templateUrl : "/blog/post/"
         }).when("/links/", {
             templateUrl : "/links/"

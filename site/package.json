@@ -4,6 +4,9 @@
     "version": "0.0.1a",
     "dependencies": {
     	"express": "> 0",
-    	"jade": "> 0"
+    	"jade": "> 0",
+    	"mysql": "> 0",
+	"nodemon": "> 0",
+	"ghm": "> 0"
     }
 }
