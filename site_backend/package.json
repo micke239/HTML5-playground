@@ -5,6 +5,7 @@
     "dependencies": {
     	"express": "> 0",
     	"jade": "> 0",
-    	"mysql": "2.0.0-alpha3"
+    	"mysql": "2.0.0-alpha3",
+    	"nodemon": "> 0"
     }
 }

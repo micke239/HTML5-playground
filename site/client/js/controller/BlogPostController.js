@@ -17,7 +17,7 @@ define(["jquery"], function($) {
 	    	getPostContent();
 	    });
 
-	    $scope.editContent = function(scroll) {
+	    $scope.editContent = function() {
 	    	$("#post-content .editable").attr("contenteditable", "true");
 
 	    	$("#post-content .markdown-content").addClass("hidden");
