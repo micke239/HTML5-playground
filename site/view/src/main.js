@@ -6,7 +6,7 @@ require(["jquery", "app", "controller/controllers"], function($, app, controller
         }).when("/blog/", {
             controller: controllers.BlogHomeController,
             templateUrl : "/blog/"
-        }).when("/blog/:slug/", {
+        }).when("/blog/:id/:slug/", {
             controller : controllers.BlogPostController,
             templateUrl : "/blog/post/"
         }).when("/links/", {

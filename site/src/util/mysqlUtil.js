@@ -1,5 +1,4 @@
-
-var MysqlUtils = function() {
+var MysqlUtil = function() {
 	var twoDigits = function(d) {
 	    if(0 <= d && d < 10) return "0" + d.toString();
 	    if(-10 < d && d < 0) return "-0" + (-1*d).toString();
@@ -11,4 +10,4 @@ var MysqlUtils = function() {
 	};
 };
 
-module.exports = new MysqlUtils();
+module.exports = new MysqlUtil();

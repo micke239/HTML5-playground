@@ -5,8 +5,8 @@
     "dependencies": {
     	"express": "> 0",
     	"jade": "> 0",
-    	"mysql": "> 0",
-	"nodemon": "> 0",
-	"ghm": "> 0"
+    	"nodemon": "> 0",
+    	"ghm": "> 0",
+    	"mongoose": "> 0"
     }
 }

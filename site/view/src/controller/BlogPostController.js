@@ -2,7 +2,7 @@ define(["jquery"], function($) {
 	"use strict";
 	var BlogPostController = function($scope, $routeParams, $location) {
 		var getPostContent = function() {
-			$.get("/blog/post/" + $routeParams.slug + "/").
+			$.get("/blog/post/" + $routeParams.id + "/" + $routeParams.slug + "/").
 	    		success(function(data) {
 	    			if (data.changeSlug != undefined) {
 	    				$location.path("/blog/" + data.changeSlug + "/").replace();
@@ -18,7 +18,7 @@ define(["jquery"], function($) {
 	    });
 
 	    $scope.editContent = function() {
-	    	$("#post-content .editable").attr("contenteditable", "true");
+	    	$("#post-content #heading").attr("contenteditable", "true");
 
 	    	$("#post-content .markdown-content").addClass("hidden");
 	    	$("#post-content .markdown-textarea").removeClass("hidden");
@@ -26,19 +26,17 @@ define(["jquery"], function($) {
 
 	    	$("#save, #revert, #preview").removeClass("hidden");
 	    	$("#edit, #edit-preview").addClass("hidden");
-	    	$("html, body").animate({ scrollTop: $($('.editable')[0]).offset().top - 10 }, 50);
+	    	$("html, body").animate({ scrollTop: $("#post-content #heading").offset().top - 10 }, 50);
 	    };
 
 	    $scope.save = function() {
-	    	var i, editables = $(".editable"), editable, newContent = {};
-	    	for (i = 0; i < editables.length; i++) {
-	    		editable = $(editables[i]);
-	    		newContent[editable.attr("name")] = editable.text();
-	    	}
+	    	var newContent = {};
 
-	    	newContent.markdown = $("#post-content .markdown-textarea textarea").val();
+    		newContent.heading = $("#post-content #heading").text();
+	    	newContent.content = $("#post-content .markdown-textarea textarea").val();
+	    	newContent._id = $routeParams.id;
 
-	    	$.post("/blog/save/" + $routeParams.slug + "/", newContent).success(function(data) {
+	    	$.post("/blog/update/", newContent).success(function(data) {
 	    		if (data.status === "success") {
 	    			getPostContent();
 
@@ -71,7 +69,7 @@ define(["jquery"], function($) {
 				$("#post-content .markdown-textarea").addClass("hidden");
 	    		content.removeClass("hidden");
 
-	    		$("#post-content .editable").attr("contenteditable", "false");
+	    		$("#post-content #heading").attr("contenteditable", "false");
 
 	    		$("#preview").addClass("hidden");
 	    		$("#edit-preview").removeClass("hidden");
