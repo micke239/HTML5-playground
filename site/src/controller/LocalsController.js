@@ -20,9 +20,26 @@ var init = function(app) {
         return stringUtil.markdown(md);
     };
 
-    app.locals.createBlogPostUri = function(post) {
-        return "/#!/blog/" + post._id + "/" + stringUtil.sluggify(post.heading) + "/";
+    app.locals.createUri = function(id, heading) {
+        return "/#!/blog/" + id + "/" + stringUtil.sluggify(heading) + "/";
     };
+
+    app.locals.getBlogPostContent = function(post, admin) {
+        if (post) {
+            if (!admin) {
+                return post.live;
+            } else {
+                if (post.preview) {
+                    post.preview.preview = true; //notify that this is a preview
+                    return post.preview;
+                } else {
+                    return post.live;
+                }
+            }
+        }
+
+        return undefined;
+    }
 };
 
 module.exports = init;

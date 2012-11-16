@@ -1,29 +1,43 @@
 var init = function(app) {
 	"use strict";
 
+    var admin = true;
+
 	var stringUtil = require("../util/stringUtil"),
 		blogPostService = require("../service/blogPostService");
 
 	app.get("/blog/", function(req, res) {
-        blogPostService.getAll(function(posts) {
-            res.render("blog", {
-                posts: posts,
-                admin: true
+        if (!admin) {
+            blogPostService.getAllPublished(function(posts) {
+                res.render("blog", {
+                    posts: posts,
+                    admin: admin
+                });
             });
-        });
+        } else {
+            blogPostService.getAll(function(posts) {
+                res.render("blog", {
+                    posts: posts,
+                    admin: admin
+                });
+            });
+        }
     });
     
     app.get("/blog/post/", function(req, res) {
     	res.render("blog-post", {
-    		admin: true
+    		admin: admin
     	});
     });
     
     app.get("/blog/post/:id/:slug/", function(req, res) {
         var id = req.params.id;
         blogPostService.getBlogPost(id, function(post) {
+            var post = app.locals.getBlogPostContent(post, admin);
+
             if (post) {
-            	var postSlug = stringUtil.sluggify(post.heading);
+                var postSlug = stringUtil.sluggify(post.heading);
+
                 if (postSlug != req.params.slug) {
                     res.json({changeSlug: postSlug});
                     res.end();
@@ -34,7 +48,7 @@ var init = function(app) {
                 }        
             } else {
                 res.status(404);
-                res.end();
+                res.end("The blog post is not published or does not exist.");
             }
         });
     });

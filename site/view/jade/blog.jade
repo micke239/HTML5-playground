@@ -4,15 +4,33 @@
 			button.btn.btn-success.btn-small.new(ng-click="new()") new
 - }
 
+- var post;
 - for (var i = 0; i < posts.length; i+=3) {
 	div.row
-		- if(posts[i]) {
-			a(href="#{createBlogPostUri(posts[i])}").span3 #{posts[i].heading}
+		- post = getBlogPostContent(posts[i], admin);
+		- if(post) {
+			div.span3
+				a(href="#{createUri(posts[i]._id, post.heading)}") #{post.heading}
+				- if (post.preview) {
+					div Not published / dirty
+				- }
 		- }
-		- if(posts[i+1]) {
-			a(href="#{createBlogPostUri(posts[i+1])}").span3 #{posts[i+1].heading}
+
+		- post = getBlogPostContent(posts[i+1], admin);
+		- if(post) {
+			div.span3
+				a(href="#{createUri(posts[i+1]._id, post.heading)}") #{post.heading}
+				- if (post.preview) {
+					div Not published / dirty
+				- }
 		- }
-		- if(posts[i+2]) {
-			a(href="#{createBlogPostUri(posts[i+2])}").span3 #{posts[i+2].heading}
+
+		- post = getBlogPostContent(posts[i+2], admin);
+		- if(post) {
+			div.span3
+				a(href="#{createUri(posts[i+2]._id, post.heading)}") #{post.heading}
+				- if (post.preview) {
+					div Not published / dirty
+				- }
 		- }		
 - }

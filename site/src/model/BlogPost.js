@@ -4,11 +4,10 @@ var createBlogPostModel = function() {
 	var dbFactory = require("../factory/dbFactory"),
 	Schema = dbFactory.getSchema();
 
-	var blogPostSchema = Schema({
-		heading: String,
-		content: String,
+	var blogPostSchema = new Schema({
 		created: Date,
-		edited: Date
+		live: {type: Schema.Types.ObjectId, ref: "BlogPostContent"},
+		preview: {type: Schema.Types.ObjectId, ref: "BlogPostContent"}
 	});
 
 	return dbFactory.getDb().model("BlogPost", blogPostSchema);

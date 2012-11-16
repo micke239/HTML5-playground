@@ -4,5 +4,8 @@ define(["controller/BlogPostController", "controller/BlogHomeController"],
 	"use strict";
 	
 	
-	return {BlogPostController: BlogPostController, BlogHomeController : BlogHomeController}
+	return {
+		BlogPostController: BlogPostController, 
+		BlogHomeController: BlogHomeController
+	}
 });
