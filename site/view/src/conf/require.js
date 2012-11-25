@@ -10,6 +10,6 @@ var require = (function() {
 			"jquery": "/src/lib/jquery-module",
 			"angular": "/src/lib/angular-module"
 		},
-		baseUrl: "/src",
-	}
+		baseUrl: "/src"
+	};
 })();

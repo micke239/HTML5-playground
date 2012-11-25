@@ -21,18 +21,25 @@ var init = function(app) {
     };
 
     app.locals.createUri = function(id, heading) {
-        return "/#!/blog/" + id + "/" + stringUtil.sluggify(heading) + "/";
+        return "/#!" + app.locals.createUriWithoutHashbang(id, heading);
+    };
+
+    app.locals.createUriWithoutHashbang = function(id, heading) {
+        return "/blog/" + id + "/" + stringUtil.sluggify(heading) + "/";
     };
 
     app.locals.getBlogPostContent = function(post, admin) {
         if (post) {
             if (!admin) {
+                post.live.created = post.created;
                 return post.live;
             } else {
                 if (post.preview) {
                     post.preview.preview = true; //notify that this is a preview
+                    post.preview.created = post.created;
                     return post.preview;
                 } else {
+                    post.live.created = post.created;
                     return post.live;
                 }
             }

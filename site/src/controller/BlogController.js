@@ -1,7 +1,7 @@
 var init = function(app) {
 	"use strict";
 
-    var admin = true;
+    var admin = false;
 
 	var stringUtil = require("../util/stringUtil"),
 		blogPostService = require("../service/blogPostService");
@@ -23,6 +23,20 @@ var init = function(app) {
             });
         }
     });
+
+    app.get("/blog/create/", function(req, res) {
+        blogPostService.createBlogPost(function(result) {
+            if (result) {
+                res.json({
+                    redirect: app.locals.createUriWithoutHashbang(result.blogPost.id, result.content.heading)
+                });
+            } else {
+                res.json(false);
+            }
+
+            res.end();
+        });
+    });
     
     app.get("/blog/post/", function(req, res) {
     	res.render("blog-post", {
@@ -33,7 +47,7 @@ var init = function(app) {
     app.get("/blog/post/:id/:slug/", function(req, res) {
         var id = req.params.id;
         blogPostService.getBlogPost(id, function(post) {
-            var post = app.locals.getBlogPostContent(post, admin);
+            post = app.locals.getBlogPostContent(post, admin);
 
             if (post) {
                 var postSlug = stringUtil.sluggify(post.heading);
@@ -53,12 +67,30 @@ var init = function(app) {
         });
     });
 
-    app.post("/blog/update/", function(req, res) {
-        blogPostService.update(req.body, function(result) {
+    app.post("/blog/publish/", function(req, res) {
+        blogPostService.publish(req.body._id, function(result) {
+            res.json({success: result});
+            res.end();
+        });
+    });
+
+    app.post("/blog/unpublish/", function(req, res) {
+        blogPostService.unpublish(req.body._id, function(result) {
+            res.json({success: result});
+            res.end();
+        });
+    });
+
+    app.post("/blog/save/", function(req, res) {
+        blogPostService.save(req.body, function(result) {
             if (result) {
-                res.json({status: "success"});
+                res.json({
+                    success: true,
+                    id: result.id,
+                    slug: stringUtil.sluggify(result.heading)
+                });
             } else {
-                res.json({status: "failure"});
+                res.json({success: false});
             }
             
             res.end();

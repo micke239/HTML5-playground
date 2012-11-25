@@ -9,28 +9,49 @@
 	div.row
 		- post = getBlogPostContent(posts[i], admin);
 		- if(post) {
+			- id = posts[i]._id;
 			div.span3
-				a(href="#{createUri(posts[i]._id, post.heading)}") #{post.heading}
-				- if (post.preview) {
-					div Not published / dirty
+				a(href="#{createUri(id, post.heading)}") #{post.heading}
+				- if (admin && post.preview) {
+					div 
+						button.btn.btn-success.btn-small.publish(ng-click="publish('#{id}')", id="publish-#{id}") publish
+						button.btn.btn-danger.btn-small.unpublish.hidden(ng-click="unpublish('#{id}')", id="unpublish-#{id}") unpublish
+				- } else if (admin) {
+					div 
+						button.btn.btn-success.btn-small.hidden(ng-click="publish('#{id}')", id="publish-#{id}") publish
+						button.btn.btn-danger.btn-small.unpublish(ng-click="unpublish('#{id}')", id="unpublish-#{id}") unpublish
 				- }
 		- }
 
 		- post = getBlogPostContent(posts[i+1], admin);
 		- if(post) {
+			- id = posts[i+1]._id;
 			div.span3
-				a(href="#{createUri(posts[i+1]._id, post.heading)}") #{post.heading}
-				- if (post.preview) {
-					div Not published / dirty
+				a(href="#{createUri(id, post.heading)}") #{post.heading}
+				- if (admin && post.preview) {
+					div 
+						button.btn.btn-success.btn-small.publish(ng-click="publish('#{id}')", id="publish-#{id}") publish
+						button.btn.btn-danger.btn-small.unpublish.hidden(ng-click="unpublish('#{id}')", id="unpublish-#{id}") unpublish
+				- } else if (admin) {
+					div 
+						button.btn.btn-success.btn-small.hidden(ng-click="publish('#{id}')", id="publish-#{id}") publish
+						button.btn.btn-danger.btn-small.unpublish(ng-click="unpublish('#{id}')", id="unpublish-#{id}") unpublish
 				- }
 		- }
 
 		- post = getBlogPostContent(posts[i+2], admin);
 		- if(post) {
+			- id = posts[i+2]._id;
 			div.span3
-				a(href="#{createUri(posts[i+2]._id, post.heading)}") #{post.heading}
-				- if (post.preview) {
-					div Not published / dirty
+				a(href="#{createUri(id, post.heading)}") #{post.heading}
+				- if (admin && post.preview) {
+					div 
+						button.btn.btn-success.btn-small.publish(ng-click="publish('#{id}')", id="publish-#{id}") publish
+						button.btn.btn-danger.btn-small.unpublish.hidden(ng-click="unpublish('#{id}')", id="unpublish-#{id}") unpublish
+				- } else if (admin) {
+					div 
+						button.btn.btn-success.btn-small.hidden(ng-click="publish('#{id}')", id="publish-#{id}") publish
+						button.btn.btn-danger.btn-small.unpublish(ng-click="unpublish('#{id}')", id="unpublish-#{id}") unpublish
 				- }
 		- }		
 - }

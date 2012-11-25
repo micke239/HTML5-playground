@@ -5,7 +5,7 @@ define(["jquery"], function($) {
 			$.get("/blog/post/" + $routeParams.id + "/" + $routeParams.slug + "/").
 	    		success(function(data) {
 	    			if (data.changeSlug != undefined) {
-	    				$location.path("/blog/" + data.changeSlug + "/").replace();
+	    				$location.path("/blog/" + $routeParams.id + "/" + data.changeSlug + "/").replace();
 	    				$scope.$apply();
 	    			} 
 					
@@ -36,12 +36,11 @@ define(["jquery"], function($) {
 	    	newContent.content = $("#post-content .markdown-textarea textarea").val();
 	    	newContent._id = $routeParams.id;
 
-	    	$.post("/blog/update/", newContent).success(function(data) {
-	    		if (data.status === "success") {
-	    			getPostContent();
-
-		    		$("#save, #revert, #preview, #edit-preview").addClass("hidden");
-		    		$("#edit").removeClass("hidden");
+	    	$.post("/blog/save/", newContent).success(function(data) {
+	    		console.log(data);
+	    		if (data.success) {
+    				$location.path("/blog/" + data.id + "/" + data.slug + "/").replace();
+    				$scope.$apply();
 	    		} else {
 	    			alert("failed to save article :(");
 	    		}
